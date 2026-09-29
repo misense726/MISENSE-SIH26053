@@ -2,7 +2,7 @@
 
 **SIH 26053 · Simulation prototype · About 40% of the overall project complete**
 
-MI Sense is building an adaptive LiDAR map for dynamic environments. This repository is the completed simulation milestone: it turns simulated scans into variable-size 2.5D terrain cells, tracks moving actors, and lets you inspect the result in a browser. The 40% figure is our estimate of progress against the full project roadmap, not a count of files or lines of code.
+MI Sense is building an adaptive LiDAR map for dynamic environments. This repository contains the simulation milestone: it turns simulated scans into variable-size 2.5D terrain cells, tracks moving actors, and lets you inspect the result in a browser.
 
 ![MI Sense terrain map showing the survey vehicle, road, hazards, and adaptive cells](docs/default-map.png)
 
