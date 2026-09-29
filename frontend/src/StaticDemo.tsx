@@ -16,7 +16,7 @@ export default function StaticDemo() {
   const [recording, setRecording] = useState<StaticRecording | null>(null);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [speed, setSpeed] = useState(1);
+  const [playbackFps, setPlaybackFps] = useState(0);
   const [preset, setPreset] = useState<MapPreset>("terrain");
   const [camera, setCamera] = useState<CameraRequest>({ preset: "angled", serial: 0 });
   const [selection, setSelection] = useState<Selection | null>(null);
@@ -59,12 +59,22 @@ export default function StaticDemo() {
 
   useEffect(() => {
     if (!recording || !playing) return;
+    let delivered = 0;
+    let sampleStarted = performance.now();
     const timer = window.setInterval(() => {
-      if (!document.hidden)
+      const now = performance.now();
+      if (!document.hidden) {
         setIndex((current) => nextFrameIndex(current, recording.frames.length));
-    }, 1000 / (recording.fps * speed));
+        delivered += 1;
+      }
+      if (now - sampleStarted >= 1000) {
+        setPlaybackFps((delivered * 1000) / (now - sampleStarted));
+        delivered = 0;
+        sampleStarted = now;
+      }
+    }, 1000 / recording.fps);
     return () => window.clearInterval(timer);
-  }, [recording, playing, speed]);
+  }, [recording, playing]);
 
   const frame = recording?.frames[index] ?? null;
   const layers = layersForPreset(preset);
@@ -80,6 +90,7 @@ export default function StaticDemo() {
   const chooseScene = (next: string) => {
     setSceneId(next);
     setRecording(null);
+    setPlaybackFps(0);
     setIndex(0);
     setError(null);
     setSelection(null);
@@ -143,6 +154,12 @@ export default function StaticDemo() {
               </button>
             ))}
           </div>
+        </div>
+
+        <div className="static-measures" role="group" aria-label="Simulation measurements">
+          <div><span>Playback FPS</span><strong>{recording ? (playing ? playbackFps.toFixed(1) : "0.0") : "—"}</strong></div>
+          <div><span>Adaptive cells</span><strong>{frame?.adaptive_cells.length.toLocaleString() ?? "—"}</strong></div>
+          <div><span>Est. grid storage saved</span><strong>{frame ? `${frame.metrics.memory_saved_percent.toFixed(1)}%` : "—"}</strong></div>
         </div>
 
         <section className="map-stage static-map" aria-label="Simulation map">
@@ -209,15 +226,6 @@ export default function StaticDemo() {
             <label htmlFor="scene-progress">{playing ? "Playing continuously" : "Playback paused"}</label>
             <progress id="scene-progress" value={recording ? index + 1 : 0} max={recording?.frames.length ?? 1} />
           </div>
-          <div className="static-measures" aria-label="Frame measurements">
-            <div><span>Adaptive cells</span><strong>{frame?.adaptive_cells.length.toLocaleString() ?? "—"}</strong></div>
-            <div><span>Est. grid storage saved</span><strong>{frame ? `${frame.metrics.memory_saved_percent.toFixed(1)}%` : "—"}</strong></div>
-          </div>
-          <label className="static-speed">Speed
-            <select value={speed} onChange={(event) => setSpeed(Number(event.target.value))}>
-              <option value={0.5}>0.5×</option><option value={1}>1×</option><option value={2}>2×</option>
-            </select>
-          </label>
         </footer>
       </main>
     </div>

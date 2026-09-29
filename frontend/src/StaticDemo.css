@@ -1,5 +1,20 @@
+.static-demo {
+  height: 100dvh;
+  min-height: 0;
+}
+
+.static-demo .demo-workspace {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 10px;
+  padding: 0 20px 12px;
+}
+
 .static-header {
   justify-content: space-between;
+  flex-shrink: 0;
+  min-height: 64px;
+  padding: 10px 20px;
 }
 
 .static-header-right {
@@ -21,18 +36,20 @@
 
 .static-toolbar {
   gap: 24px;
+  min-height: 72px;
 }
 
-.static-map {
-  min-height: 560px;
+.static-demo .static-map {
+  min-height: 0;
+  height: auto;
 }
 
 .static-playback-strip {
   display: flex;
   align-items: center;
   gap: 28px;
-  min-height: 104px;
-  padding: 16px 4px 0;
+  min-height: 44px;
+  padding: 0 4px;
 }
 
 .static-playback-strip .playback-controls button {
@@ -42,15 +59,14 @@
 }
 
 .static-progress {
-  width: min(220px, 18vw);
+  width: min(320px, 35vw);
   display: grid;
   gap: 8px;
   flex-shrink: 0;
 }
 
 .static-progress label,
-.static-measures span,
-.static-speed {
+.static-measures span {
   color: var(--muted);
   font-size: 12px;
 }
@@ -62,32 +78,24 @@
 }
 
 .static-measures {
-  margin-left: auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;
-  gap: 28px;
+  width: min(680px, 100%);
+  gap: 24px;
+  padding: 0 4px 4px;
 }
 
 .static-measures > div {
   display: grid;
-  gap: 5px;
+  gap: 2px;
 }
 
 .static-measures strong {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 400;
   white-space: nowrap;
-}
-
-.static-speed {
-  display: grid;
-  gap: 5px;
-  flex-shrink: 0;
-}
-
-.static-speed select {
-  min-width: 84px;
 }
 
 .static-inspector {
@@ -158,19 +166,14 @@
   margin-bottom: 14px;
 }
 
-@media (max-width: 1000px) {
-  .static-playback-strip {
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .static-measures {
-    margin-left: 0;
-  }
-}
-
 @media (max-width: 800px) {
+  .static-demo .demo-workspace {
+    gap: 8px;
+    padding: 0 12px 10px;
+  }
   .static-header {
-    min-height: 72px;
+    min-height: 58px;
+    padding: 8px 12px;
     flex-wrap: nowrap;
   }
   .static-header-right {
@@ -180,36 +183,49 @@
     display: none;
   }
   .static-toolbar .scenario-control p {
-    display: block;
+    display: none;
+  }
+  .static-toolbar {
+    gap: 6px;
+    min-height: 0;
+    padding: 8px 0 0;
   }
   .static-toolbar .segmented {
     width: 100%;
   }
-  .static-map {
-    min-height: 520px;
+  .static-measures {
+    gap: 10px;
+    padding: 2px 0;
+  }
+  .static-measures span {
+    font-size: 11px;
+  }
+  .static-measures strong {
+    font-size: 21px;
   }
   .static-inspector {
     top: auto;
-    bottom: 105px;
+    bottom: 100px;
     right: 12px;
     width: min(245px, calc(100% - 24px));
   }
   .static-playback-strip {
-    min-height: 0;
-    align-items: start;
-    padding-bottom: 10px;
+    gap: 14px;
+    padding: 0;
   }
   .static-progress {
-    width: calc(100% - 180px);
+    width: auto;
+    min-width: 0;
+    flex: 1;
   }
-  .static-measures {
-    order: 3;
-    width: 100%;
-    justify-content: space-between;
-    gap: 12px;
+  .static-progress label {
+    font-size: 11px;
   }
-  .static-speed {
-    order: 4;
-    margin-left: auto;
+  .static-demo .map-caption h1 {
+    font-size: 19px;
+  }
+  .static-demo .map-legend {
+    font-size: 11px;
+    padding: 8px;
   }
 }
