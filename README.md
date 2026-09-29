@@ -61,5 +61,3 @@ npm --prefix frontend run lint
 npm --prefix frontend test
 & ./backend/venv/Scripts/python.exe -m pytest backend/tests -q
 ```
-
-The repository contains the simulation source and its tests. It does not include third-party datasets, trained weights, local caches, or experimental workspaces.
