@@ -74,3 +74,7 @@ npm --prefix frontend run lint
 npm --prefix frontend test
 & ./backend/venv/Scripts/python.exe -m pytest backend/tests -q
 ```
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
