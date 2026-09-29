@@ -4,6 +4,8 @@
 
 MI Sense is building an adaptive LiDAR map for dynamic environments. This repository contains the simulation milestone: it turns simulated scans into variable-size 2.5D terrain cells, tracks moving actors, and lets you inspect the result in a browser.
 
+**[Open the simulation](https://misense-sih-26053.vercel.app/)** — it starts on its own and loops continuously.
+
 ![MI Sense terrain map showing the survey vehicle, road, hazards, and adaptive cells](docs/default-map.png)
 
 ## What you can try
@@ -52,6 +54,17 @@ npm --prefix frontend run dev
 ```
 
 Open <http://127.0.0.1:5173>. The frontend proxies `/api` and `/ws` to the backend. Both processes must be running for the interactive simulation.
+
+## Update the hosted simulation
+
+After changing a scene, refresh the browser recordings and build the static site:
+
+```powershell
+& ./backend/venv/Scripts/python.exe scripts/export_static_demo.py
+npm --prefix frontend run build:demo
+```
+
+Deploy `frontend/dist` to the `misense-sih-26053` Vercel project. The hosted player reuses each recording as it loops.
 
 ## Check the prototype
 

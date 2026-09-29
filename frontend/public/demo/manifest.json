@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "kind": "SIMULATED",
+  "default_scene": "complex_environment",
+  "scenes": [
+    {
+      "id": "complex_environment",
+      "name": "Complex Urban Intersection",
+      "frames": 70,
+      "file": "complex_environment.json.gz"
+    },
+    {
+      "id": "pedestrian",
+      "name": "Crossing Pedestrian",
+      "frames": 80,
+      "file": "pedestrian.json.gz"
+    },
+    {
+      "id": "moving_vehicle",
+      "name": "Overtaking Moving Vehicle",
+      "frames": 65,
+      "file": "moving_vehicle.json.gz"
+    },
+    {
+      "id": "pothole",
+      "name": "Road Potholes & Depressions",
+      "frames": 12,
+      "file": "pothole.json.gz"
+    },
+    {
+      "id": "curb_boundary",
+      "name": "Curb & Sidewalk Delineation",
+      "frames": 12,
+      "file": "curb_boundary.json.gz"
+    },
+    {
+      "id": "normal_road",
+      "name": "Normal Highway Road",
+      "frames": 12,
+      "file": "normal_road.json.gz"
+    }
+  ]
+}
