@@ -1,0 +1,61 @@
+# MI Sense Adaptive 2.5D LiDAR Mapping Configuration
+# Problem Statement: SIH 26053
+
+system:
+  project_name: "MI Sense - Adaptive 2.5D LiDAR Mapping"
+  version: "1.0.0"
+  simulation_fps: 15
+  port: 8000
+
+sensor:
+  type: "64-beam Spinning LiDAR"
+  range_min: 0.5
+  range_max: 50.0
+  horizontal_fov: 360.0
+  vertical_fov_min: -25.0
+  vertical_fov_max: 15.0
+  noise_std: 0.02
+  dropout_rate: 0.03
+
+roi:
+  x_min: -32.0
+  x_max: 32.0
+  y_min: -16.0
+  y_max: 48.0
+  z_min: -2.5
+  z_max: 4.0
+
+quadtree:
+  root_size: 64.0
+  resolutions: [4.0, 2.0, 1.0, 0.5, 0.25]
+  min_cell_size: 0.25
+  max_cell_size: 4.0
+  split_thresholds:
+    level_0: 0.20  # 4m -> 2m
+    level_1: 0.40  # 2m -> 1m
+    level_2: 0.60  # 1m -> 0.5m
+    level_3: 0.75  # 0.5m -> 0.25m
+  merge_hysteresis: 0.10
+
+importance_weights:
+  w1_distance: 0.15          # Proximity to ego vehicle
+  w2_elevation_var: 0.20     # Local height variance & roughness
+  w3_semantic: 0.20          # Semantic priority (pothole, curb, road edge)
+  w4_object_prox: 0.20       # Proximity to detected 3D bounding boxes
+  w5_motion: 0.10            # Motion relevance for dynamic objects
+  w6_terrain_complexity: 0.10 # Slope and step discontinuities
+  w7_uncertainty: 0.05       # Low point count / sensor noise
+
+perception:
+  detector: "SimulatedDSVTAdapter"
+  target_classes: ["vehicle", "pedestrian", "cyclist", "static_obstacle"]
+  confidence_threshold: 0.70
+  openpcdet_compatible: true
+
+tracking:
+  algorithm: "Kalman Filter + Hungarian Assignment"
+  max_age: 5
+  min_hits: 2
+  dynamic_speed_threshold: 0.5  # m/s
+  dynamic_displacement_threshold: 1.0  # meters
+  gate_distance: 3.5  # meters
