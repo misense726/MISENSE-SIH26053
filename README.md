@@ -1,6 +1,6 @@
 # MI Sense | Adaptive 2.5D LiDAR mapping
 
-**SIH 26053 · Simulation prototype · About 40% of the overall project complete**
+**SIH 26053 · Simulation prototype**
 
 MI Sense is building an adaptive LiDAR map for dynamic environments. This repository contains the simulation milestone: it turns simulated scans into variable-size 2.5D terrain cells, tracks moving actors, and lets you inspect the result in a browser.
 
